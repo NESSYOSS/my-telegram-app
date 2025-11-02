@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 40px 0 20px;
+            color: var(--tg-theme-text-color);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--tg-theme-button-color);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .info {
+            background: var(--tg-theme-secondary-bg-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .button {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            width: calc(100% - 20px);
+            max-width: 300px;
+        }
+
+        .button:active {
+            opacity: 0.8;
+        }
+
+        .user-info {
+            background: var(--tg-theme-section-bg-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="avatar">👋</div>
+        <h1>Привет!</h1>
+        
+        <div class="info">
+            <p><strong>Добро пожаловать в моё Mini App!</strong></p>
+            <p>Это пример простого приложения в Telegram</p>
+        </div>
+
+        <div class="user-info" id="userInfo">
+            <p>Загрузка информации...</p>
+        </div>
+
+        <button class="button" onclick="showAlert()">
+            Нажми на меня! 🎉
+        </button>
+
+        <button class="button" onclick="closeApp()">
+            Закрыть приложение
+        </button>
+    </div>
+
+    <script>
+        // Инициализация Telegram WebApp
+        let tg = window.Telegram.WebApp;
+        
+        // Разворачиваем приложение на весь экран
+        tg.expand();
+
+        // Получаем информацию о пользователе
+        let user = tg.initDataUnsafe.user;
+
+        // Показываем информацию о пользователе
+        if (user) {
+            document.getElementById('userInfo').innerHTML = `
+                <p><strong>Привет, ${user.first_name}!</strong></p>
+                <p>Твой ID: ${user.id}</p>
+                ${user.username ? `<p>Username: @${user.username}</p>` : ''}
+            `;
+        } else {
+            document.getElementById('userInfo').innerHTML = `
+                <p>Откройте приложение через бота в Telegram</p>
+            `;
+        }
+
+        // Функция для показа уведомления
+        function showAlert() {
+            tg.showAlert('Отлично! Приложение работает! 🎉');
+        }
+
+        // Функция для закрытия приложения
+        function closeApp() {
+            tg.close();
+        }
+
+        // Показываем главную кнопку внизу
+        tg.MainButton.text = "Главная кнопка";
+        tg.MainButton.show();
+        tg.MainButton.onClick(function() {
+            tg.showAlert('Вы нажали на главную кнопку!');
+        });
+    </script>
+</body>
+</html>
