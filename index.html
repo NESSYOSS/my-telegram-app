@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моё Mini App</title>
+    <title>Моё Приложение</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -16,136 +16,435 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--tg-theme-bg-color);
             color: var(--tg-theme-text-color);
-            padding: 20px;
-            min-height: 100vh;
+            padding-bottom: 20px;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        /* Шапка приложения */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
             text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        h1 {
+        .header h1 {
             font-size: 28px;
-            margin: 40px 0 20px;
-            color: var(--tg-theme-text-color);
+            margin-bottom: 10px;
         }
 
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Аватар */
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: var(--tg-theme-button-color);
-            margin: 20px auto;
+            background: white;
+            margin: -50px auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 48px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .info {
+        /* Контейнер */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Карточки */
+        .card {
             background: var(--tg-theme-secondary-bg-color);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
-            margin: 20px 0;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .info p {
-            margin: 10px 0;
-            font-size: 16px;
-            line-height: 1.5;
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--tg-theme-text-color);
         }
 
+        .card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--tg-theme-hint-color);
+        }
+
+        /* Кнопки */
         .button {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
             border: none;
-            border-radius: 8px;
-            padding: 15px 30px;
+            border-radius: 12px;
+            padding: 16px 24px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin: 10px;
-            width: calc(100% - 20px);
-            max-width: 300px;
+            width: 100%;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s;
         }
 
         .button:active {
-            opacity: 0.8;
+            transform: scale(0.98);
         }
 
-        .user-info {
-            background: var(--tg-theme-section-bg-color);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 14px;
+        .button.secondary {
+            background: var(--tg-theme-secondary-bg-color);
+            color: var(--tg-theme-text-color);
+        }
+
+        /* Список с иконками */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--tg-theme-hint-color);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--tg-theme-button-color);
+            border-radius: 10px;
+        }
+
+        /* Секции (страницы) */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Навигация внизу */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--tg-theme-secondary-bg-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            color: var(--tg-theme-hint-color);
+            font-size: 24px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-button.active {
+            color: var(--tg-theme-button-color);
+            transform: scale(1.2);
+        }
+
+        /* Форма */
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border: 2px solid var(--tg-theme-hint-color);
+            border-radius: 10px;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--tg-theme-button-color);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
         }
     </style>
 </head>
 <body>
+    <!-- Шапка -->
+    <div class="header">
+        <h1>✨ Моё Приложение</h1>
+        <p>Добро пожаловать!</p>
+    </div>
+
+    <div class="avatar">🚀</div>
+
     <div class="container">
-        <div class="avatar">👋</div>
-        <h1>Привет!</h1>
-        
-        <div class="info">
-            <p><strong>Добро пожаловать в моё Mini App!</strong></p>
-            <p>Это пример простого приложения в Telegram</p>
+        <!-- СЕКЦИЯ 1: Главная -->
+        <div class="section active" id="home">
+            <div class="card">
+                <h2>👋 Привет!</h2>
+                <p id="userName">Рад видеть вас в моём приложении!</p>
+            </div>
+
+            <div class="card">
+                <h2>💡 Возможности</h2>
+                <ul class="feature-list">
+                    <li>
+                        <div class="icon">⚡</div>
+                        <span>Быстрая работа</span>
+                    </li>
+                    <li>
+                        <div class="icon">🎨</div>
+                        <span>Красивый дизайн</span>
+                    </li>
+                    <li>
+                        <div class="icon">🔒</div>
+                        <span>Безопасность</span>
+                    </li>
+                    <li>
+                        <div class="icon">📱</div>
+                        <span>Удобный интерфейс</span>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="button" onclick="tg.showAlert('Кнопка работает! 🎉')">
+                <span>🎯</span>
+                <span>Нажми на меня!</span>
+            </button>
+
+            <button class="button secondary" onclick="showSection('catalog')">
+                <span>📚</span>
+                <span>Перейти в каталог</span>
+            </button>
         </div>
 
-        <div class="user-info" id="userInfo">
-            <p>Загрузка информации...</p>
+        <!-- СЕКЦИЯ 2: Каталог -->
+        <div class="section" id="catalog">
+            <div class="card">
+                <h2>📚 Каталог товаров</h2>
+                <p>Выберите интересующий вас товар:</p>
+            </div>
+
+            <div class="card">
+                <h2>🎁 Товар 1</h2>
+                <p><strong>Цена:</strong> 1000 ₽</p>
+                <p>Описание товара. Здесь можно написать подробную информацию о продукте.</p>
+                <button class="button" onclick="buyItem('Товар 1')">
+                    Купить
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>🎨 Товар 2</h2>
+                <p><strong>Цена:</strong> 1500 ₽</p>
+                <p>Ещё один замечательный товар с описанием.</p>
+                <button class="button" onclick="buyItem('Товар 2')">
+                    Купить
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>⭐ Товар 3</h2>
+                <p><strong>Цена:</strong> 2000 ₽</p>
+                <p>Премиум товар высокого качества.</p>
+                <button class="button" onclick="buyItem('Товар 3')">
+                    Купить
+                </button>
+            </div>
         </div>
 
-        <button class="button" onclick="showAlert()">
-            Нажми на меня! 🎉
-        </button>
+        <!-- СЕКЦИЯ 3: Контакты -->
+        <div class="section" id="contact">
+            <div class="card">
+                <h2>📬 Свяжитесь с нами</h2>
+                <p>Заполните форму, и мы вам ответим!</p>
+            </div>
 
-        <button class="button" onclick="closeApp()">
-            Закрыть приложение
-        </button>
+            <div class="card">
+                <input type="text" id="contactName" placeholder="Ваше имя">
+                <input type="email" id="contactEmail" placeholder="Email">
+                <textarea id="contactMessage" placeholder="Ваше сообщение"></textarea>
+                <button class="button" onclick="sendMessage()">
+                    📤 Отправить
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>📞 Наши контакты</h2>
+                <ul class="feature-list">
+                    <li>
+                        <div class="icon">📧</div>
+                        <span>email@example.com</span>
+                    </li>
+                    <li>
+                        <div class="icon">📱</div>
+                        <span>+7 (999) 123-45-67</span>
+                    </li>
+                    <li>
+                        <div class="icon">🌐</div>
+                        <span>www.example.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 4: О нас -->
+        <div class="section" id="about">
+            <div class="card">
+                <h2>ℹ️ О приложении</h2>
+                <p>Это пример многостраничного приложения в Telegram. Здесь вы можете разместить информацию о своей компании, услугах или проекте.</p>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Наши цели</h2>
+                <p>• Создавать качественные продукты</p>
+                <p>• Помогать клиентам решать задачи</p>
+                <p>• Развиваться и совершенствоваться</p>
+            </div>
+
+            <div class="card">
+                <h2>📊 Статистика</h2>
+                <ul class="feature-list">
+                    <li>
+                        <div class="icon">👥</div>
+                        <span>1000+ клиентов</span>
+                    </li>
+                    <li>
+                        <div class="icon">⭐</div>
+                        <span>500+ отзывов</span>
+                    </li>
+                    <li>
+                        <div class="icon">🏆</div>
+                        <span>10+ наград</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Отступ для нижнего меню -->
+        <div style="height: 80px;"></div>
+    </div>
+
+    <!-- Нижнее меню навигации -->
+    <div class="bottom-nav">
+        <button class="nav-button active" onclick="showSection('home')">🏠</button>
+        <button class="nav-button" onclick="showSection('catalog')">📚</button>
+        <button class="nav-button" onclick="showSection('contact')">📬</button>
+        <button class="nav-button" onclick="showSection('about')">ℹ️</button>
     </div>
 
     <script>
         // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
-        
-        // Разворачиваем приложение на весь экран
         tg.expand();
 
-        // Получаем информацию о пользователе
+        // Получаем данные пользователя
         let user = tg.initDataUnsafe.user;
-
-        // Показываем информацию о пользователе
         if (user) {
-            document.getElementById('userInfo').innerHTML = `
-                <p><strong>Привет, ${user.first_name}!</strong></p>
-                <p>Твой ID: ${user.id}</p>
-                ${user.username ? `<p>Username: @${user.username}</p>` : ''}
-            `;
-        } else {
-            document.getElementById('userInfo').innerHTML = `
-                <p>Откройте приложение через бота в Telegram</p>
-            `;
+            document.getElementById('userName').textContent = 
+                `Привет, ${user.first_name}! Рад видеть вас в моём приложении!`;
         }
 
-        // Функция для показа уведомления
-        function showAlert() {
-            tg.showAlert('Отлично! Приложение работает! 🎉');
+        // Функция переключения между секциями
+        function showSection(sectionId) {
+            // Скрываем все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показываем нужную секцию
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Обновляем активную кнопку в меню
+            document.querySelectorAll('.nav-button').forEach((btn, index) => {
+                btn.classList.remove('active');
+            });
+            
+            // Подсветка нужной кнопки
+            const sections = ['home', 'catalog', 'contact', 'about'];
+            const btnIndex = sections.indexOf(sectionId);
+            document.querySelectorAll('.nav-button')[btnIndex].classList.add('active');
+            
+            // Прокрутка наверх
+            window.scrollTo(0, 0);
+            
+            // Вибрация при переключении
+            tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Функция для закрытия приложения
-        function closeApp() {
-            tg.close();
+        // Функция покупки товара
+        function buyItem(itemName) {
+            tg.showConfirm(
+                `Вы хотите купить "${itemName}"?`,
+                function(confirmed) {
+                    if (confirmed) {
+                        tg.showAlert(`Отлично! Товар "${itemName}" добавлен в корзину! 🛒`);
+                        tg.HapticFeedback.notificationOccurred('success');
+                    }
+                }
+            );
         }
 
-        // Показываем главную кнопку внизу
-        tg.MainButton.text = "Главная кнопка";
+        // Функция отправки сообщения
+        function sendMessage() {
+            let name = document.getElementById('contactName').value;
+            let email = document.getElementById('contactEmail').value;
+            let message = document.getElementById('contactMessage').value;
+            
+            if (!name || !email || !message) {
+                tg.showAlert('❌ Пожалуйста, заполните все поля!');
+                tg.HapticFeedback.notificationOccurred('error');
+                return;
+            }
+            
+            tg.showAlert(`✅ Спасибо, ${name}! Ваше сообщение отправлено!`);
+            tg.HapticFeedback.notificationOccurred('success');
+            
+            // Очистка формы
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+
+        // Настройка главной кнопки
+        tg.MainButton.text = "Закрыть приложение";
         tg.MainButton.show();
         tg.MainButton.onClick(function() {
-            tg.showAlert('Вы нажали на главную кнопку!');
+            tg.close();
         });
     </script>
 </body>
 </html>
+обновил приложение
+
