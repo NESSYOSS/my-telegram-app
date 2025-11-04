@@ -16,77 +16,195 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--tg-theme-bg-color);
             color: var(--tg-theme-text-color);
-            padding-bottom: 20px;
+            padding-bottom: 80px;
         }
 
-        /* Шапка приложения */
+        /* Шапка */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
 
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        /* Аватар */
-        .avatar {
-            width: 100px;
-            height: 100px;
+        .header .back-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: white;
-            margin: -50px auto 20px;
-            display: flex;
+            cursor: pointer;
+            display: none;
+        }
+
+        .header .back-btn.show {
+            display: block;
+        }
+
+        /* Корзина в шапке */
+        .cart-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: none;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: bold;
+        }
+
+        .cart-badge.show {
+            display: flex;
         }
 
         /* Контейнер */
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 15px;
         }
 
-        /* Карточки */
-        .card {
+        /* Секции (страницы) */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Карточки - главное меню */
+        .menu-card {
+            background: var(--tg-theme-secondary-bg-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        .menu-card .icon {
+            font-size: 48px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .menu-card .info h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .menu-card .info p {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color);
+        }
+
+        /* Карточки товаров */
+        .product-card {
             background: var(--tg-theme-secondary-bg-color);
             border-radius: 16px;
-            padding: 20px;
+            padding: 0;
             margin: 15px 0;
+            overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .card h2 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--tg-theme-text-color);
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
-        .card p {
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--tg-theme-button-color);
+            margin: 10px 0;
+        }
+
+        .product-card .free-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .product-card p {
             font-size: 15px;
             line-height: 1.6;
+            margin: 10px 0;
             color: var(--tg-theme-hint-color);
         }
 
         /* Кнопки */
-        .button {
+        .btn {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
             border: none;
             border-radius: 12px;
-            padding: 16px 24px;
+            padding: 14px 24px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -95,356 +213,721 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: transform 0.2s;
         }
 
-        .button:active {
+        .btn:active {
             transform: scale(0.98);
         }
 
-        .button.secondary {
+        .btn.secondary {
             background: var(--tg-theme-secondary-bg-color);
             color: var(--tg-theme-text-color);
         }
 
-        /* Список с иконками */
-        .feature-list {
-            list-style: none;
-            padding: 0;
+        .btn.small {
+            padding: 10px 20px;
+            font-size: 14px;
+            width: auto;
+            display: inline-flex;
         }
 
-        .feature-list li {
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .tab {
+            background: var(--tg-theme-secondary-bg-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--tg-theme-text-color);
+            font-size: 15px;
+        }
+
+        .tab.active {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+        }
+
+        /* Отзывы */
+        .review {
+            background: var(--tg-theme-bg-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .review .stars {
+            color: #fbbf24;
+            margin-bottom: 8px;
+        }
+
+        .review .author {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .review .text {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--tg-theme-hint-color);
+        }
+
+        /* Корзина */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--tg-theme-secondary-bg-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-item .info {
+            flex: 1;
+        }
+
+        .cart-item .name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item .price {
+            color: var(--tg-theme-button-color);
+            font-weight: bold;
+        }
+
+        .cart-item .remove {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .cart-total {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .cart-total .amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* Пустая корзина */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state .emoji {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+            color: var(--tg-theme-hint-color);
+        }
+
+        /* Список с иконками */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
             padding: 12px 0;
             border-bottom: 1px solid var(--tg-theme-hint-color);
-            font-size: 15px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .feature-list li:last-child {
+        .info-list li:last-child {
             border-bottom: none;
         }
 
-        .icon {
+        .info-list .emoji {
             font-size: 24px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--tg-theme-button-color);
-            border-radius: 10px;
-        }
-
-        /* Секции (страницы) */
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* Навигация внизу */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--tg-theme-secondary-bg-color);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-button {
-            background: none;
-            border: none;
-            color: var(--tg-theme-hint-color);
-            font-size: 24px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-button.active {
-            color: var(--tg-theme-button-color);
-            transform: scale(1.2);
-        }
-
-        /* Форма */
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            border: 2px solid var(--tg-theme-hint-color);
-            border-radius: 10px;
-            background: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
-            font-size: 15px;
-            font-family: inherit;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--tg-theme-button-color);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
         }
     </style>
 </head>
 <body>
     <!-- Шапка -->
     <div class="header">
-        <h1>✨ Моё Приложение</h1>
-        <p>Добро пожаловать!</p>
+        <button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+        <h1 id="headerTitle">Главное меню</h1>
+        <button class="cart-icon" onclick="showPage('cart')">
+            🛒
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
     </div>
-
-    <div class="avatar">🚀</div>
 
     <div class="container">
-        <!-- СЕКЦИЯ 1: Главная -->
-        <div class="section active" id="home">
-            <div class="card">
-                <h2>👋 Привет!</h2>
-                <p id="userName">Рад видеть вас в моём приложении!</p>
+        
+        <!-- ============================================ -->
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <!-- ============================================ -->
+        <div class="page active" id="mainPage">
+            
+            <!-- КАРТОЧКА 1: ВЯЗАНИЕ -->
+            <!-- Измените эмодзи, название и описание -->
+            <div class="menu-card" onclick="showPage('knitting')">
+                <div class="icon">🧶</div>
+                <div class="info">
+                    <h2>Вязание</h2>
+                    <p>Схемы, мастер-классы, готовые изделия</p>
+                </div>
             </div>
 
-            <div class="card">
-                <h2>💡 Возможности</h2>
-                <ul class="feature-list">
-                    <li>
-                        <div class="icon">⚡</div>
-                        <span>Быстрая работа</span>
-                    </li>
-                    <li>
-                        <div class="icon">🎨</div>
-                        <span>Красивый дизайн</span>
-                    </li>
-                    <li>
-                        <div class="icon">🔒</div>
-                        <span>Безопасность</span>
-                    </li>
-                    <li>
-                        <div class="icon">📱</div>
-                        <span>Удобный интерфейс</span>
-                    </li>
-                </ul>
+            <!-- КАРТОЧКА 2: НЕЙРОСЕТИ -->
+            <!-- Измените эмодзи, название и описание -->
+            <div class="menu-card" onclick="showPage('ai')">
+                <div class="icon">🤖</div>
+                <div class="info">
+                    <h2>Нейросети</h2>
+                    <p>Промты, курсы, консультации по AI</p>
+                </div>
             </div>
 
-            <button class="button" onclick="tg.showAlert('Кнопка работает! 🎉')">
-                <span>🎯</span>
-                <span>Нажми на меня!</span>
-            </button>
+            <!-- КАРТОЧКА 3: КОНТЕНТ-ПОМОЩНИК -->
+            <!-- Измените эмодзи, название и описание -->
+            <div class="menu-card" onclick="showPage('content')">
+                <div class="icon">✍️</div>
+                <div class="info">
+                    <h2>Контент-помощник</h2>
+                    <p>Тексты, дизайн, SMM-услуги</p>
+                </div>
+            </div>
 
-            <button class="button secondary" onclick="showSection('catalog')">
-                <span>📚</span>
-                <span>Перейти в каталог</span>
-            </button>
         </div>
 
-        <!-- СЕКЦИЯ 2: Каталог -->
-        <div class="section" id="catalog">
-            <div class="card">
-                <h2>📚 Каталог товаров</h2>
-                <p>Выберите интересующий вас товар:</p>
+        <!-- ============================================ -->
+        <!-- СТРАНИЦА: ВЯЗАНИЕ -->
+        <!-- ============================================ -->
+        <div class="page" id="knitting">
+            
+            <!-- Вкладки -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('knitting', 'products')">Товары</button>
+                <button class="tab" onclick="showTab('knitting', 'free')">Бесплатное</button>
+                <button class="tab" onclick="showTab('knitting', 'reviews')">Отзывы</button>
+                <button class="tab" onclick="showTab('knitting', 'useful')">Полезное</button>
             </div>
 
-            <div class="card">
-                <h2>🎁 Товар 1</h2>
-                <p><strong>Цена:</strong> 1000 ₽</p>
-                <p>Описание товара. Здесь можно написать подробную информацию о продукте.</p>
-                <button class="button" onclick="buyItem('Товар 1')">
-                    Купить
+            <!-- ВКЛАДКА: Товары -->
+            <div class="tab-content active" id="knitting-products">
+                
+                <!-- ТОВАР 1 -->
+                <!-- ЗАМЕНИТЕ: фото, название, цену, описание -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=600" alt="Шапка">
+                    <div class="product-content">
+                        <h3>🧢 Вязаная шапка</h3>
+                        <div class="price">1500 ₽</div>
+                        <p>Тёплая шапка ручной работы из мериносовой шерсти. Идеально для холодной зимы!</p>
+                        <button class="btn" onclick="addToCart('Вязаная шапка', 1500, 'https://images.unsplash.com/photo-1524678714210-9917a6c619c2?w=600')">
+                            🛒 Добавить в корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ТОВАР 2 -->
+                <!-- ЗАМЕНИТЕ: фото, название, цену, описание -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600" alt="Шарф">
+                    <div class="product-content">
+                        <h3>🧣 Шарф снуд</h3>
+                        <div class="price">2000 ₽</div>
+                        <p>Уютный шарф-снуд крупной вязки. Мягкий и стильный аксессуар.</p>
+                        <button class="btn" onclick="addToCart('Шарф снуд', 2000, 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600')">
+                            🛒 Добавить в корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ТОВАР 3 -->
+                <!-- ЗАМЕНИТЕ: фото, название, цену, описание -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1583225214464-9296029427aa?w=600" alt="Плед">
+                    <div class="product-content">
+                        <h3>🛋️ Вязаный плед</h3>
+                        <div class="price">5000 ₽</div>
+                        <p>Большой тёплый плед 150х200см. Создаст уют в вашем доме.</p>
+                        <button class="btn" onclick="addToCart('Вязаный плед', 5000, 'https://images.unsplash.com/photo-1583225214464-9296029427aa?w=600')">
+                            🛒 Добавить в корзину
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ДОБАВЬТЕ СВОИ ТОВАРЫ, СКОПИРОВАВ БЛОК ВЫШЕ -->
+
+            </div>
+
+            <!-- ВКЛАДКА: Бесплатное -->
+            <div class="tab-content" id="knitting-free">
+                
+                <div class="product-card">
+                    <div class="product-content">
+                        <span class="free-badge">БЕСПЛАТНО</span>
+                        <h3>📄 Схема простой шапки</h3>
+                        <p>Базовая схема вязания шапки для начинающих. PDF файл с пошаговой инструкцией.</p>
+                        <a href="https://example.com/схема.pdf" target="_blank" style="text-decoration: none;">
+                            <button class="btn">📥 Скачать бесплатно</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-content">
+                        <span class="free-badge">БЕСПЛАТНО</span>
+                        <h3>🎥 Видео-урок</h3>
+                        <p>Как начать вязать спицами - урок для новичков (15 минут)</p>
+                        <a href="https://youtube.com/watch?v=..." target="_blank" style="text-decoration: none;">
+                            <button class="btn">▶️ Смотреть на YouTube</button>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ДОБАВЬТЕ БЕСПЛАТНЫЕ МАТЕРИАЛЫ -->
+
+            </div>
+
+            <!-- ВКЛАДКА: Отзывы -->
+            <div class="tab-content" id="knitting-reviews">
+                
+                <!-- ОТЗЫВ 1 - измените имя и текст -->
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="author">Анна К.</div>
+                    <div class="text">"Шапка просто супер! Очень тёплая и красивая. Заказала ещё шарф!"</div>
+                </div>
+
+                <!-- ОТЗЫВ 2 -->
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="author">Мария П.</div>
+                    <div class="text">"Качество вязки отличное, всё аккуратно. Рекомендую!"</div>
+                </div>
+
+                <!-- ОТЗЫВ 3 -->
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="author">Елена С.</div>
+                    <div class="text">"Купила плед - он невероятно мягкий и уютный. Спасибо!"</div>
+                </div>
+
+                <!-- ДОБАВЬТЕ СВОИ ОТЗЫВЫ, скопировав блок выше -->
+
+            </div>
+
+            <!-- ВКЛАДКА: Полезное -->
+            <div class="tab-content" id="knitting-useful">
+                
+                <div class="product-card">
+                    <div class="product-content">
+                        <h3>📚 Полезные ссылки</h3>
+                        <ul class="info-list">
+                            <li>
+                                <span class="emoji">📺</span>
+                                <a href="https://youtube.com" target="_blank">Мой YouTube канал</a>
+                            </li>
+                            <li>
+                                <span class="emoji">📸</span>
+                                <a href="https://instagram.com" target="_blank">Instagram с работами</a>
+                            </li>
+                            <li>
+                                <span class="emoji">💬</span>
+                                <a href="https://t.me/ваш_канал" target="_blank">Telegram канал</a>
+                            </li>
+                            <li>
+                                <span class="emoji">🛍️</span>
+                                <a href="https://pinterest.com" target="_blank">Pinterest</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ДОБАВЬТЕ ПОЛЕЗНУЮ ИНФОРМАЦИЮ -->
+
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- СТРАНИЦА: НЕЙРОСЕТИ -->
+        <!-- ============================================ -->
+        <div class="page" id="ai">
+            
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('ai', 'products')">Услуги</button>
+                <button class="tab" onclick="showTab('ai', 'free')">Бесплатное</button>
+                <button class="tab" onclick="showTab('ai', 'reviews')">Отзывы</button>
+            </div>
+
+            <!-- Товары -->
+            <div class="tab-content active" id="ai-products">
+                
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600" alt="AI">
+                    <div class="product-content">
+                        <h3>🎓 Курс по ChatGPT</h3>
+                        <div class="price">3000 ₽</div>
+                        <p>Полный курс по работе с ChatGPT: от базовых промптов до сложных автоматизаций.</p>
+                        <button class="btn" onclick="addToCart('Курс ChatGPT', 3000, 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600')">
+                            🛒 Купить курс
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-content">
+                        <h3>💼 Консультация по AI</h3>
+                        <div class="price">2500 ₽</div>
+                        <p>Индивидуальная консультация 1 час. Помогу внедрить AI в ваш бизнес.</p>
+                        <button class="btn" onclick="addToCart('Консультация AI', 2500, '')">
+                            🛒 Записаться
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ДОБАВЬТЕ СВОИ УСЛУГИ -->
+
+            </div>
+
+            <!-- Бесплатное -->
+            <div class="tab-content" id="ai-free">
+                <div class="product-card">
+                    <div class="product-content">
+                        <span class="free-badge">БЕСПЛАТНО</span>
+                        <h3>📝 50 готовых промптов</h3>
+                        <p>Сборник лучших промптов для ChatGPT, Midjourney и других AI-инструментов.</p>
+                        <button class="btn" onclick="tg.showAlert('Промпты отправлены вам в личку! 📬')">
+                            📥 Получить промпты
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Отзывы -->
+            <div class="tab-content" id="ai-reviews">
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="author">Дмитрий В.</div>
+                    <div class="text">"Курс просто бомба! Теперь использую AI в работе каждый день."</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- СТРАНИЦА: КОНТЕНТ-ПОМОЩНИК -->
+        <!-- ============================================ -->
+        <div class="page" id="content">
+            
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('content', 'products')">Услуги</button>
+                <button class="tab" onclick="showTab('content', 'portfolio')">Портфолио</button>
+                <button class="tab" onclick="showTab('content', 'reviews')">Отзывы</button>
+            </div>
+
+            <!-- Услуги -->
+            <div class="tab-content active" id="content-products">
+                
+                <div class="product-card">
+                    <div class="product-content">
+                        <h3>✍️ Написание текстов</h3>
+                        <div class="price">1000 ₽</div>
+                        <p>Продающие тексты для соцсетей, сайтов, рассылок. 1000 знаков.</p>
+                        <button class="btn" onclick="addToCart('Написание текстов', 1000, '')">
+                            🛒 Заказать
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-content">
+                        <h3>🎨 Дизайн поста</h3>
+                        <div class="price">500 ₽</div>
+                        <p>Красивый дизайн поста для Instagram/VK/Telegram. 1 макет.</p>
+                        <button class="btn" onclick="addToCart('Дизайн поста', 500, '')">
+                            🛒 Заказать
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-content">
+                        <h3>📱 SMM-ведение</h3>
+                        <div class="price">15000 ₽/мес</div>
+                        <p>Полное ведение аккаунта: контент-план, тексты, дизайн, публикации.</p>
+                        <button class="btn" onclick="addToCart('SMM-ведение', 15000, '')">
+                            🛒 Подключить
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ДОБАВЬТЕ СВОИ УСЛУГИ -->
+
+            </div>
+
+            <!-- Портфолио -->
+            <div class="tab-content" id="content-portfolio">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600" alt="Работа">
+                    <div class="product-content">
+                        <h3>📊 Проект для интернет-магазина</h3>
+                        <p>Полное SMM-ведение. Рост охватов на 300% за 3 месяца.</p>
+                    </div>
+                </div>
+                <!-- ДОБАВЬТЕ ПРИМЕРЫ РАБОТ -->
+            </div>
+
+            <!-- Отзывы -->
+            <div class="tab-content" id="content-reviews">
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="author">Ольга М.</div>
+                    <div class="text">"Тексты просто огонь! Продажи выросли. Спасибо!"</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- СТРАНИЦА: КОРЗИНА -->
+        <!-- ============================================ -->
+        <div class="page" id="cart">
+            
+            <div id="cartItems">
+                <!-- Товары добавятся сюда автоматически -->
+            </div>
+
+            <div id="cartEmpty" class="empty-state">
+                <div class="emoji">🛒</div>
+                <p>Корзина пуста</p>
+                <button class="btn" onclick="showPage('mainPage')">Вернуться к покупкам</button>
+            </div>
+
+            <div id="cartTotal" style="display: none;">
+                <div class="cart-total">
+                    <div>Итого:</div>
+                    <div class="amount" id="totalAmount">0 ₽</div>
+                </div>
+                <button class="btn" onclick="checkout()">
+                    💳 Оформить заказ
                 </button>
             </div>
 
-            <div class="card">
-                <h2>🎨 Товар 2</h2>
-                <p><strong>Цена:</strong> 1500 ₽</p>
-                <p>Ещё один замечательный товар с описанием.</p>
-                <button class="button" onclick="buyItem('Товар 2')">
-                    Купить
-                </button>
-            </div>
-
-            <div class="card">
-                <h2>⭐ Товар 3</h2>
-                <p><strong>Цена:</strong> 2000 ₽</p>
-                <p>Премиум товар высокого качества.</p>
-                <button class="button" onclick="buyItem('Товар 3')">
-                    Купить
-                </button>
-            </div>
         </div>
 
-        <!-- СЕКЦИЯ 3: Контакты -->
-        <div class="section" id="contact">
-            <div class="card">
-                <h2>📬 Свяжитесь с нами</h2>
-                <p>Заполните форму, и мы вам ответим!</p>
-            </div>
-
-            <div class="card">
-                <input type="text" id="contactName" placeholder="Ваше имя">
-                <input type="email" id="contactEmail" placeholder="Email">
-                <textarea id="contactMessage" placeholder="Ваше сообщение"></textarea>
-                <button class="button" onclick="sendMessage()">
-                    📤 Отправить
-                </button>
-            </div>
-
-            <div class="card">
-                <h2>📞 Наши контакты</h2>
-                <ul class="feature-list">
-                    <li>
-                        <div class="icon">📧</div>
-                        <span>email@example.com</span>
-                    </li>
-                    <li>
-                        <div class="icon">📱</div>
-                        <span>+7 (999) 123-45-67</span>
-                    </li>
-                    <li>
-                        <div class="icon">🌐</div>
-                        <span>www.example.com</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- СЕКЦИЯ 4: О нас -->
-        <div class="section" id="about">
-            <div class="card">
-                <h2>ℹ️ О приложении</h2>
-                <p>Это пример многостраничного приложения в Telegram. Здесь вы можете разместить информацию о своей компании, услугах или проекте.</p>
-            </div>
-
-            <div class="card">
-                <h2>🎯 Наши цели</h2>
-                <p>• Создавать качественные продукты</p>
-                <p>• Помогать клиентам решать задачи</p>
-                <p>• Развиваться и совершенствоваться</p>
-            </div>
-
-            <div class="card">
-                <h2>📊 Статистика</h2>
-                <ul class="feature-list">
-                    <li>
-                        <div class="icon">👥</div>
-                        <span>1000+ клиентов</span>
-                    </li>
-                    <li>
-                        <div class="icon">⭐</div>
-                        <span>500+ отзывов</span>
-                    </li>
-                    <li>
-                        <div class="icon">🏆</div>
-                        <span>10+ наград</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Отступ для нижнего меню -->
-        <div style="height: 80px;"></div>
-    </div>
-
-    <!-- Нижнее меню навигации -->
-    <div class="bottom-nav">
-        <button class="nav-button active" onclick="showSection('home')">🏠</button>
-        <button class="nav-button" onclick="showSection('catalog')">📚</button>
-        <button class="nav-button" onclick="showSection('contact')">📬</button>
-        <button class="nav-button" onclick="showSection('about')">ℹ️</button>
     </div>
 
     <script>
-        // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Получаем данные пользователя
-        let user = tg.initDataUnsafe.user;
-        if (user) {
-            document.getElementById('userName').textContent = 
-                `Привет, ${user.first_name}! Рад видеть вас в моём приложении!`;
-        }
+        // История страниц для кнопки "Назад"
+        let pageHistory = ['mainPage'];
+        
+        // Корзина
+        let cart = [];
 
-        // Функция переключения между секциями
-        function showSection(sectionId) {
-            // Скрываем все секции
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
+        // Показать страницу
+        function showPage(pageId) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             
-            // Показываем нужную секцию
-            document.getElementById(sectionId).classList.add('active');
+            // Показываем нужную
+            document.getElementById(pageId).classList.add('active');
             
-            // Обновляем активную кнопку в меню
-            document.querySelectorAll('.nav-button').forEach((btn, index) => {
-                btn.classList.remove('active');
-            });
+            // Обновляем историю
+            if (pageId !== pageHistory[pageHistory.length - 1]) {
+                pageHistory.push(pageId);
+            }
             
-            // Подсветка нужной кнопки
-            const sections = ['home', 'catalog', 'contact', 'about'];
-            const btnIndex = sections.indexOf(sectionId);
-            document.querySelectorAll('.nav-button')[btnIndex].classList.add('active');
+            // Обновляем заголовок
+            updateHeader(pageId);
             
             // Прокрутка наверх
             window.scrollTo(0, 0);
             
-            // Вибрация при переключении
+            // Вибрация
+            tg.HapticFeedback.impactOccurred('light');
+
+            // Если открыли корзину - обновляем её
+            if (pageId === 'cart') {
+                updateCart();
+            }
+        }
+
+        // Обновление заголовка
+        function updateHeader(pageId) {
+            const titles = {
+                'mainPage': 'Главное меню',
+                'knitting': '🧶 Вязание',
+                'ai': '🤖 Нейросети',
+                'content': '✍️ Контент-помощник',
+                'cart': '🛒 Корзина'
+            };
+            
+            document.getElementById('headerTitle').textContent = titles[pageId] || 'Главное меню';
+            
+            // Показываем кнопку назад
+            const backBtn = document.getElementById('backBtn');
+            if (pageId === 'mainPage') {
+                backBtn.classList.remove('show');
+            } else {
+                backBtn.classList.add('show');
+            }
+        }
+
+        // Назад
+        function goBack() {
+            if (pageHistory.length > 1) {
+                pageHistory.pop();
+                const prevPage = pageHistory[pageHistory.length - 1];
+                pageHistory.pop(); // Убираем, чтобы showPage снова добавил
+                showPage(prevPage);
+            }
+        }
+
+        // Переключение вкладок
+        function showTab(section, tabName) {
+            // Убираем active у всех вкладок и контента в секции
+            document.querySelectorAll(`#${section} .tab`).forEach(t => t.classList.remove('active'));
+            document.querySelectorAll(`#${section} .tab-content`).forEach(c => c.classList.remove('active'));
+            
+            // Добавляем active нужным
+            event.target.classList.add('active');
+            document.getElementById(`${section}-${tabName}`).classList.add('active');
+            
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Функция покупки товара
-        function buyItem(itemName) {
-            tg.showConfirm(
-                `Вы хотите купить "${itemName}"?`,
-                function(confirmed) {
-                    if (confirmed) {
-                        tg.showAlert(`Отлично! Товар "${itemName}" добавлен в корзину! 🛒`);
-                        tg.HapticFeedback.notificationOccurred('success');
-                    }
-                }
-            );
+        // Добавить в корзину
+        function addToCart(name, price, image) {
+            cart.push({ name, price, image });
+            
+            // Обновляем счётчик
+            const badge = document.getElementById('cartBadge');
+            badge.textContent = cart.length;
+            badge.classList.add('show');
+            
+            tg.showAlert(`✅ "${name}" добавлен в корзину!`);
+            tg.HapticFeedback.notificationOccurred('success');
         }
 
-        // Функция отправки сообщения
-        function sendMessage() {
-            let name = document.getElementById('contactName').value;
-            let email = document.getElementById('contactEmail').value;
-            let message = document.getElementById('contactMessage').value;
+        // Удалить из корзины
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        // Обновить корзину
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartTotal = document.getElementById('cartTotal');
+            const badge = document.getElementById('cartBadge');
             
-            if (!name || !email || !message) {
-                tg.showAlert('❌ Пожалуйста, заполните все поля!');
-                tg.HapticFeedback.notificationOccurred('error');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '';
+                cartEmpty.style.display = 'block';
+                cartTotal.style.display = 'none';
+                badge.classList.remove('show');
                 return;
             }
             
-            tg.showAlert(`✅ Спасибо, ${name}! Ваше сообщение отправлено!`);
-            tg.HapticFeedback.notificationOccurred('success');
+            cartEmpty.style.display = 'none';
+            cartTotal.style.display = 'block';
+            badge.textContent = cart.length;
+            badge.classList.add('show');
             
-            // Очистка формы
-            document.getElementById('contactName').value = '';
-            document.getElementById('contactEmail').value = '';
-            document.getElementById('contactMessage').value = '';
+            let total = 0;
+            let html = '';
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div style="width:60px;height:60px;background:#ddd;border-radius:8px;"></div>'}
+                        <div class="info">
+                            <div class="name">${item.name}</div>
+                            <div class="price">${item.price} ₽</div>
+                        </div>
+                        <button class="remove" onclick="removeFromCart(${index})">×</button>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            document.getElementById('totalAmount').textContent = `${total} ₽`;
         }
 
-        // Настройка главной кнопки
+        // Оформить заказ
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            let orderText = '🛒 НОВЫЙ ЗАКАЗ:\n\n';
+            let total = 0;
+            
+            cart.forEach((item, i) => {
+                orderText += `${i + 1}. ${item.name} - ${item.price} ₽\n`;
+                total += item.price;
+            });
+            
+            orderText += `\n💰 Итого: ${total} ₽`;
+            
+            // Отправляем данные боту
+            tg.sendData(JSON.stringify({
+                type: 'order',
+                items: cart,
+                total: total
+            }));
+            
+            tg.showAlert('✅ Заказ оформлен! Мы свяжемся с вами для подтверждения.');
+            
+            // Очищаем корзину
+            cart = [];
+            updateCart();
+        }
+
+        // Главная кнопка
         tg.MainButton.text = "Закрыть приложение";
         tg.MainButton.show();
         tg.MainButton.onClick(function() {
             tg.close();
         });
+
+        // Инициализация
+        updateHeader('mainPage');
     </script>
 </body>
 </html>
 обновил приложение
-
